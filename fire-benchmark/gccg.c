@@ -36,15 +36,22 @@ int main(int argc, char *argv[]) {
     /** Additional vectors required for the computation */
     double *cgup, *oc, *cnorm;
 
-   
- 
-    char *file_in = argv[1];
+	/*check if the input is correct and return an error message with instruction*/
+	if (argc !=4)
+	{
+		printf("Error: input failed, please input as gccg <format> <input file> <output prefix>");	
+	return 0;
+	}
+
+	 /*we should use format <format> <input file> <output prefix>*/
+	char *format = argv[1];    
+	char *file_in = argv[2];
  
     /********** START INITIALIZATION **********/
     // read-in the input file
     int init_status = initialization(file_in, &nintci, &nintcf, &nextci, &nextcf, &lcc,
                                      &bs, &be, &bn, &bw, &bl, &bh, &bp, &su, &var, &cgup, &oc, 
-                                     &cnorm);
+                                     &cnorm, argv);
 
     if ( init_status != 0 ) {
         fprintf(stderr, "Failed to initialize data!\n");

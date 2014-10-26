@@ -13,6 +13,7 @@ int read_formatted(char *filename, int *nintci, int *nintcf, int *nextci,
         double **bw, double **bl, double **bh, double **bp, double **su)
 {
     int i;
+
     FILE *fp = fopen(filename, "r");
     if (fp == NULL)
     {
