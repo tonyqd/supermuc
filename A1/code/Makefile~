@@ -5,11 +5,11 @@
 ####################################################################
 
 #Compilers
-CC = mpicc -icc
+CC = gcc
 CFLAGS = -Wall -g -O0 
 
 #linker
-LIBS = -lm $(PAPI_INC) $(PAPI_LIB)
+LIBS = -lm
 
 LIBPOS=libpos.a
 AR = ar

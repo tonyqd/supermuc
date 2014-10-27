@@ -15,8 +15,6 @@
 #include "compute_solution.h"
 #include "finalization.h"
 
-#define NUM_EVENTS 5
-
 int main(int argc, char *argv[]) {
     int i;
 
