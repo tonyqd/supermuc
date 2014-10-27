@@ -46,6 +46,7 @@ int main(int argc, char *argv[]) {
 	 /*we should use format <format> <input file> <output prefix>*/
 	char *format = argv[1];    
 	char *file_in = argv[2];
+	char *prefix = argv[3];
  
     /********** START INITIALIZATION **********/
     // read-in the input file
@@ -67,7 +68,7 @@ int main(int argc, char *argv[]) {
     /********** END COMPUTATIONAL LOOP **********/
 
     /********** START FINALIZATION **********/
-    finalization(file_in, total_iters, residual_ratio, nintci, nintcf, var, cgup, su, lcc);
+    finalization(file_in, total_iters, residual_ratio, nintci, nintcf, var, cgup, su, lcc, prefix);
     /********** END FINALIZATION **********/
 
 

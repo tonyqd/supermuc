@@ -6,16 +6,25 @@
  */
 
 #include <stdio.h>
+#include <string.h>
 #include "util_write_files.h"
 #include "vol2mesh.h"
 
 void finalization(char* file_in, int total_iters, double residual_ratio,
-		  int nintci, int nintcf, double* var, double* cgup, double* su, int **lcc){
+		  int nintci, int nintcf, double* var, double* cgup, double* su, int **lcc, char *prefix)
+{
   
   char file_out[30] = "summary.out";
-  char file_su_vtk[30] = "SU.vtk";
-  char file_var_vtk[30] = "VAR.vtk";
-  char file_cgup_vtk[30] = "CGUP.vtk";
+  char file_su_vtk[30];
+  char file_var_vtk[30];
+  char file_cgup_vtk[30];
+  
+  strcpy(file_su_vtk, prefix); /* copy name into the new var */
+  strcat(file_su_vtk, ".SU.vtk"); /* add the extension */
+  strcpy(file_var_vtk, prefix); /* copy name into the new var */
+  strcat(file_var_vtk, ".VAR.vtk"); /* add the extension */
+  strcpy(file_cgup_vtk, prefix); /* copy name into the new var */
+  strcat(file_cgup_vtk, ".CGUP.vtk"); /* add the extension */
   
   int status = write_result(file_in, file_out, nintci, nintcf, var, total_iters, residual_ratio);
   
@@ -29,7 +38,8 @@ void finalization(char* file_in, int total_iters, double residual_ratio,
   write_result_vtk(file_su_vtk, nintci, nintcf, nodeCnt, points, elems, su);
   write_result_vtk(file_var_vtk, nintci, nintcf, nodeCnt, points, elems, var);
   write_result_vtk(file_cgup_vtk, nintci, nintcf, nodeCnt, points, elems, cgup);
+
   
-		  }
+}
 		  
 		  
