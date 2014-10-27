@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
     /********** END COMPUTATIONAL LOOP **********/
 
     /********** START FINALIZATION **********/
-    finalization(file_in, total_iters, residual_ratio, nintci, nintcf, var, cgup, su);
+    finalization(file_in, total_iters, residual_ratio, nintci, nintcf, var, cgup, su, lcc);
     /********** END FINALIZATION **********/
 
 
