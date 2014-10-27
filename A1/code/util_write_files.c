@@ -101,6 +101,8 @@ int write_result(char *infilename, char *outfilename, int nintci, int nintcf,
     printf("done!\n");
 
     free(ipoint);
+   
+    
     return 0;
 }
 

@@ -49,10 +49,11 @@ int main(int argc, char *argv[]) {
 	 /*we should use format <format> <input file> <output prefix>*/
 	char *format = argv[1];    
 	char *file_in = argv[2];
+	char *prefix = argv[3];
  
     /********** START INITIALIZATION **********/
     // read-in the input file
-    int init_status = initialization(file_in, &nintci, &nintcf, &nextci, &nextcf, &lcc,
+    int init_status = initialization(file_in, format, &nintci, &nintcf, &nextci, &nextcf, &lcc,
                                      &bs, &be, &bn, &bw, &bl, &bh, &bp, &su, &var, &cgup, &oc, 
                                      &cnorm, argv);
 
@@ -60,9 +61,16 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "Failed to initialize data!\n");
         abort();
     } 
-    /********** END INITIALIZATION **********/
 
-    /**********Initialize the PAPI Counters************/
+   
+    /********** END INITIALIZATION **********/
+/**********Initialize the PAPI Counters************/
+    void handle_error (int retval)
+{
+     printf("PAPI error %d: %s\n", retval, PAPI_strerror(retval));
+     exit(1);
+}
+    
     float rtime, ptime, mflops;
     long long flpops;
      
@@ -75,10 +83,14 @@ int main(int argc, char *argv[]) {
         PAPI_TOT_CYC, /*Total cycles*/};
 
     if(PAPI_library_init(PAPI_VER_CURRENT) != PAPI_VER_CURRENT) exit(1);
+    printf("error1");
     
     /**********Start Counting*********/
     if(PAPI_start_counters(PAPI_events,NUM_EVENTS) != PAPI_OK) handle_error(1);
-    if(PAPI_flops( &rtime, &ptime, &flpops,  &mflops ) != PAPI_OK) handle_error(1); 
+    printf("error1");
+    
+    /*if(PAPI_flops( &rtime, &ptime, &flpops,  &mflops ) != PAPI_OK) handle_error(1); 
+    printf("error1");*/
         
 
     /********** START COMPUTATIONAL LOOP **********/
@@ -89,20 +101,19 @@ int main(int argc, char *argv[]) {
     /********** END COMPUTATIONAL LOOP **********/
     
     /*********stop counting *********/
-    if(PAPI_flops( &rtime, &ptime, &flpops,  &mflops ) != PAPI_OK) handle_error(1); 
+    /*if(PAPI_flops( &rtime, &ptime, &flpops,  &mflops ) != PAPI_OK) handle_error(1); */
     if(PAPI_stop_counters(counters,NUM_EVENTS) != PAPI_OK) handle_error(1);
 
     printf("the execution time is %f. \n", rtime);
     
     printf("the Mflops is %f.", mflops);
     
-    printf("%lld L2 cache misses in %lld cycles, with L2 cash miss rate %.3lf \n", PAPI_events[0], PAPI_events[4], (double)PAPI_events[0]/PAPI_events[1] );
+    printf("%lld L2 cache misses in %lld cycles, with L2 cash miss rate %.3lf \n", counters[0], counters[4], (double)counters[0]/counters[1] );
     
-    printf("%lld L3 cache misses in %lld cycles, with L3 cash miss rate %.3lf \n", PAPI_events[2], PAPI_events[4], (double)PAPI_events[2]/PAPI_events[3] );
-    
-    
+    printf("%lld L3 cache misses in %lld cycles, with L3 cash miss rate %.3lf \n", counters[2], counters[4], (double)counters[2]/counters[3] );
+
     /********** START FINALIZATION **********/
-    finalization(file_in, total_iters, residual_ratio, nintci, nintcf, var, cgup, su);
+    finalization(file_in, total_iters, residual_ratio, nintci, nintcf, var, cgup, su, lcc, prefix);
     /********** END FINALIZATION **********/
 
 
