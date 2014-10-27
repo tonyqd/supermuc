@@ -1,0 +1,10 @@
+Writing data to summary.out: done!
+nodeCnt = 16310, startInd= 0, endInd = 13844, cellCnt=13845
+nodeCnt = 16310, startInd= 0, endInd = 13844, cellCnt=13845
+nodeCnt = 16310, startInd= 0, endInd = 13844, cellCnt=13845
+lcc[1][0] = 13854
+lcc[1][1] = 2
+lcc[1][2] = 15
+lcc[1][3] = 0
+lcc[1][4] = 13853
+lcc[1][5] = 183
