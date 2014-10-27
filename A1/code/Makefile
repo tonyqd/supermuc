@@ -5,7 +5,7 @@
 ####################################################################
 
 #Compilers
-CC = mpicc -cc=gcc
+CC = gcc
 CFLAGS = -Wall -g -O0 
 
 #linker

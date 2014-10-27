@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "mpi.h"
+//#include "mpi.h"
 
 #include "initialization.h"
 #include "compute_solution.h"
@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
  
     /********** START INITIALIZATION **********/
     // read-in the input file
-    int init_status = initialization(file_in, &nintci, &nintcf, &nextci, &nextcf, &lcc,
+    int init_status = initialization(file_in, format, &nintci, &nintcf, &nextci, &nextcf, &lcc,
                                      &bs, &be, &bn, &bw, &bl, &bh, &bp, &su, &var, &cgup, &oc, 
                                      &cnorm, argv);
 
