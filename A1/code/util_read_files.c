@@ -211,6 +211,11 @@ int read_formatted(char *filename, char *format, int *nintci, int *nintcf, int *
     return 0;
     
   }
+  else
+  {
+    printf("Error: wrong input file format specified! Use either 'text' or 'bin'!\n");
+    return -1;
+  }
   
   
 }
