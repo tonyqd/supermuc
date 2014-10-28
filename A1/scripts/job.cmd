@@ -8,7 +8,7 @@
 #@ node = 1
 ### schedule the job to 2 to 4 islands 
 #@ island_count=1, 1
-#@ total_tasks= 1
+#@ total_tasks= 16
 ## other example
 ##@ tasks_per_node = 16
 #@ wall_clock_limit = 0:30:00
