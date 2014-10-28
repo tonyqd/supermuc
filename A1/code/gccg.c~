@@ -62,18 +62,14 @@ int main(int argc, char *argv[]) {
         abort();
     } 
 
-   
     /********** END INITIALIZATION **********/
-/**********Initialize the PAPI Counters************/
+    /**********Initialize the PAPI Counters************/
     void handle_error (int retval)
-{
-     printf("PAPI error %d: %s\n", retval, PAPI_strerror(retval));
-     exit(1);
-}
-    
-    float rtime, ptime, mflops;
-    long long flpops;
-     
+    {
+         printf("PAPI error %d: %s\n", retval, PAPI_strerror(retval));
+      exit(1);
+    }     
+    /*************first computational loop in order to test L2/L3 cache miss rate*****************/    
     long long counters[NUM_EVENTS];
     int PAPI_events[] = {
         PAPI_L2_TCM, /*Level 2 cache misses*/
@@ -83,37 +79,34 @@ int main(int argc, char *argv[]) {
         PAPI_TOT_CYC, /*Total cycles*/};
 
     if(PAPI_library_init(PAPI_VER_CURRENT) != PAPI_VER_CURRENT) exit(1);
-    printf("error1");
     
     /**********Start Counting*********/
     if(PAPI_start_counters(PAPI_events,NUM_EVENTS) != PAPI_OK) handle_error(1);
-    printf("error1");
-    
-    /*if(PAPI_flops( &rtime, &ptime, &flpops,  &mflops ) != PAPI_OK) handle_error(1); 
-    printf("error1");*/
         
-
     /********** START COMPUTATIONAL LOOP **********/
-    
-    
     int total_iters = compute_solution(max_iters, nintci, nintcf, nextcf, lcc, bp, bs, bw, bl, bn,
                                        be, bh, cnorm, var, su, cgup, &residual_ratio);
     /********** END COMPUTATIONAL LOOP **********/
     
     /*********stop counting *********/
-    if(PAPI_flops( &rtime, &ptime, &flpops,  &mflops ) != PAPI_OK) handle_error(1); 
     if(PAPI_stop_counters(counters,NUM_EVENTS) != PAPI_OK) handle_error(1);
+   
+    /***********second computational loop in order to measure execution time and Mflops**********/    
+    float rtime, ptime, mflops;
+    long long flpops;
+        
+    if(PAPI_flops( &rtime, &ptime, &flpops,  &mflops ) != PAPI_OK) handle_error(1);
+    
+    /********** START COMPUTATIONAL LOOP **********/
+    
+    int total_iters = compute_solution(max_iters, nintci, nintcf, nextcf, lcc, bp, bs, bw, bl, bn,
+                                       be, bh, cnorm, var, su, cgup, &residual_ratio);
+    /********** END COMPUTATIONAL LOOP **********/
+    if(PAPI_flops( &rtime, &ptime, &flpops, &mflops ) != PAPI_OK) handle_error(1);
 
-    printf("the execution time is %f. \n", rtime);
-    
-    printf("the Mflops is %f.", mflops);
-    
-    printf("%lld L2 cache misses in %lld cycles, with L2 cash miss rate %.3lf \n", counters[0], counters[4], (double)counters[0]/counters[1] );
-    
-    printf("%lld L3 cache misses in %lld cycles, with L3 cash miss rate %.3lf \n", counters[2], counters[4], (double)counters[2]/counters[3] );
 
     /********** START FINALIZATION **********/
-    finalization(file_in, total_iters, residual_ratio, nintci, nintcf, var, cgup, su, lcc, prefix);
+    finalization(file_in, total_iters, residual_ratio, nintci, nintcf, var, cgup, su, lcc, prefix, counters, rtime, ptime, mflops, flpops);
     /********** END FINALIZATION **********/
 
 
@@ -141,4 +134,5 @@ for ( i = 0; i < 6; ++i)
  
     return 0;
 }
+
 
