@@ -6,6 +6,7 @@
  */
 
 #include <stdlib.h>
+#include <papi.h>
 
 #include "util_read_files.h"
 #include "initialization.h"
@@ -13,13 +14,16 @@
 int initialization(char* file_in, char *format, int* nintci, int* nintcf, int* nextci,
                    int* nextcf, int*** lcc, double** bs, double** be, double** bn, double** bw,
                    double** bl, double** bh, double** bp, double** su, double** var, double** cgup, 
-                   double** oc, double** cnorm, char *argv[]) {
+                   double** oc, double** cnorm, char *argv[],float *rtime, float *ptime, float *mflops, long long *flpops) {
     /********** START INITIALIZATION **********/
     int i = 0;
     
+    if(PAPI_flops( rtime, ptime, flpops,  mflops ) != PAPI_OK) handle_error(1);
     // read-in the input file
     int f_status = read_formatted(file_in, format, &*nintci, &*nintcf, &*nextci, &*nextcf, &*lcc, &*bs,&*be, &*bn, &*bw, &*bl, &*bh, &*bp, &*su);
     
+    if(PAPI_flops( rtime, ptime, flpops,  mflops ) != PAPI_OK) handle_error(1);                               
+
     if ( f_status != 0 ) return f_status;
 
     *var = (double*) calloc( (*nextcf + 1), sizeof(double) );

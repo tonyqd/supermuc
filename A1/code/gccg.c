@@ -51,24 +51,34 @@ int main(int argc, char *argv[]) {
 	char *file_in = argv[2];
 	char *prefix = argv[3];
  
+    void handle_error (int retval)
+    {
+         printf("PAPI error %d: %s\n", retval, PAPI_strerror(retval));
+      exit(1);
+    }  
     /********** START INITIALIZATION **********/
     // read-in the input file
+   
+    
+    float rtime_read, ptime_read, mflops_read;
+    long long flpops_read;    
+    
+    /*if(PAPI_flops( &rtime_read, &ptime_read, &flpops_read,  &mflops_read ) != PAPI_OK) handle_error(1);*/
+    
+    
     int init_status = initialization(file_in, format, &nintci, &nintcf, &nextci, &nextcf, &lcc,
                                      &bs, &be, &bn, &bw, &bl, &bh, &bp, &su, &var, &cgup, &oc, 
                                      &cnorm, argv);
 
+    /*if(PAPI_flops( &rtime_read, &ptime_read, &flpops_read,  &mflops_read ) != PAPI_OK) handle_error(1);*/
+    
     if ( init_status != 0 ) {
         fprintf(stderr, "Failed to initialize data!\n");
         abort();
     } 
 
     /********** END INITIALIZATION **********/
-    /**********Initialize the PAPI Counters************/
-    void handle_error (int retval)
-    {
-         printf("PAPI error %d: %s\n", retval, PAPI_strerror(retval));
-      exit(1);
-    }     
+    
     /*************first computational loop in order to test L2/L3 cache miss rate*****************/    
     long long counters[NUM_EVENTS];
     int PAPI_events[] = {
@@ -78,7 +88,7 @@ int main(int argc, char *argv[]) {
         PAPI_L3_TCA, /*Level 3 total cache accesses*/
         };
 
-    if(PAPI_library_init(PAPI_VER_CURRENT) != PAPI_VER_CURRENT) exit(1);
+    
 
     /**********Start Counting*********/
     if(PAPI_start_counters(PAPI_events,NUM_EVENTS) != PAPI_OK) handle_error(1);
@@ -94,8 +104,10 @@ int main(int argc, char *argv[]) {
     /***********second computational loop in order to measure execution time and Mflops**********/    
     float rtime, ptime, mflops;
     long long flpops;
-        
+    
+    
     if(PAPI_flops( &rtime, &ptime, &flpops,  &mflops ) != PAPI_OK) handle_error(1);
+    printf("third time:%f \n", rtime);
     
     /********** START COMPUTATIONAL LOOP **********/
     

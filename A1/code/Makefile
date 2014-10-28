@@ -6,7 +6,7 @@
 
 #Compilers
 CC = mpicc -icc
-CFLAGS = -Wall -g -O0 
+CFLAGS = -Wall -g -O0
 
 #linker
 LIBS = -lm $(PAPI_INC) $(PAPI_LIB)
