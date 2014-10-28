@@ -32,3 +32,6 @@ $(LIBPOS) : $(OBJS)
 
 clean:
 	rm -rf *.o gccg $(LIBPOS)
+	
+binconv:
+	$(CC) $(CFLAGS) binconv.c -o binconv
