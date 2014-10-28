@@ -21,12 +21,6 @@ int main(int *argc, char *argv[])
   int **lcc;
   double *bs, *be, *bn, *bw, *bl, *bh, *bp, *su;
   
-  if (argc !=3)
-	{
-		printf("Error: input failed, please input as ./binconv <input file> <output file>");	
-	return 0;
-	}
-	
   filename_txt = argv[1];
   filename_bin = argv[2];
   
