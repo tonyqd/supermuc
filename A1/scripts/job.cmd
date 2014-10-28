@@ -29,3 +29,4 @@ module load mpi.intel
 module load papi
 perf_off
 mpiexec -n 1 ./gccg text cojack.dat cojack
+

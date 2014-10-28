@@ -8,7 +8,7 @@
 #define XWRITE_H_
 
 int write_result(char *infilename, char *outfilename, int nintci, int nintcf,
-        double *var, int iter, double ratio, long long *counters, float rtime, float ptime, float mflops, long long flpops);
+        double *var, int iter, double ratio);
 
 int write_result_vtk(char *outFileName, int startIdx, int endIdx, int nodeCnt, 
 	int **points, int **elems, double *vector);

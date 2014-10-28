@@ -26,7 +26,7 @@ void finalization(char* file_in, int total_iters, double residual_ratio,
   strcpy(file_cgup_vtk, prefix); /* copy name into the new var */
   strcat(file_cgup_vtk, ".CGUP.vtk"); /* add the extension */
   
-  int status = write_result(file_in, file_out, nintci, nintcf, var, total_iters, residual_ratio, counters, rtime, ptime, mflops, flpops);
+  int status = write_result(file_in, file_out, nintci, nintcf, var, total_iters, residual_ratio, &counters, rtime, ptime, mflops, flpops);
   
   if ( status != 0 ) fprintf(stderr, "Error when trying to write to file %s\n", file_out);
   
