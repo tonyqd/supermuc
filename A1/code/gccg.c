@@ -65,6 +65,7 @@ int main(int argc, char *argv[]) {
    
     /********** END INITIALIZATION **********/
 /**********Initialize the PAPI Counters************/
+<<<<<<< HEAD
     void handle_error (int retval)
 {
      printf("PAPI error %d: %s\n", retval, PAPI_strerror(retval));
@@ -72,6 +73,15 @@ int main(int argc, char *argv[]) {
 }
     
     float rtime, ptime, mflops;
+=======
+	void handle_error (int retval)
+	{
+		 printf("PAPI error %d: %s\n", retval, PAPI_strerror(retval));
+		 exit(1);
+	}    
+
+	float rtime, ptime, mflops;
+>>>>>>> 6353848fbe75e8bd03934097d0b3d255886a9611
     long long flpops;
      
     long long counters[NUM_EVENTS];
@@ -87,10 +97,14 @@ int main(int argc, char *argv[]) {
     
     /**********Start Counting*********/
     if(PAPI_start_counters(PAPI_events,NUM_EVENTS) != PAPI_OK) handle_error(1);
+<<<<<<< HEAD
     printf("error1");
     
     /*if(PAPI_flops( &rtime, &ptime, &flpops,  &mflops ) != PAPI_OK) handle_error(1); 
     printf("error1");*/
+=======
+    /*if(PAPI_flops( &rtime, &ptime, &flpops,  &mflops ) != PAPI_OK) handle_error(1); */
+>>>>>>> 6353848fbe75e8bd03934097d0b3d255886a9611
         
 
     /********** START COMPUTATIONAL LOOP **********/
@@ -104,9 +118,9 @@ int main(int argc, char *argv[]) {
     /*if(PAPI_flops( &rtime, &ptime, &flpops,  &mflops ) != PAPI_OK) handle_error(1); */
     if(PAPI_stop_counters(counters,NUM_EVENTS) != PAPI_OK) handle_error(1);
 
-    printf("the execution time is %f. \n", rtime);
+    /*printf("the execution time is %f. \n", rtime);
     
-    printf("the Mflops is %f.", mflops);
+    printf("the Mflops is %f.", mflops);*/
     
     printf("%lld L2 cache misses in %lld cycles, with L2 cash miss rate %.3lf \n", counters[0], counters[4], (double)counters[0]/counters[1] );
     
@@ -141,4 +155,5 @@ for ( i = 0; i < 6; ++i)
  
     return 0;
 }
+
 

@@ -65,7 +65,7 @@ int main(int *argc, char *argv[])
     fscanf(fp, "%d", &(lcc[i][4]));
     fscanf(fp, "%d", &(lcc[i][5]));
   }
- 
+  
   
   // allocate other arrays
   if ((bs = (double *) malloc((nextcf + 1) * sizeof(double))) == NULL)
@@ -139,7 +139,7 @@ int main(int *argc, char *argv[])
   fwrite(&nintcf, sizeof(int), 1, fbin);
   fwrite(&nextci, sizeof(int), 1, fbin);
   fwrite(&nextcf, sizeof(int), 1, fbin);
-
+  
   for (i = nintci; i <= nintcf; i++)
   {
     fwrite(lcc[i], sizeof(int), 6, fbin);
@@ -153,8 +153,8 @@ int main(int *argc, char *argv[])
   fwrite(bh, sizeof(double), (nextcf + 1), fbin);
   fwrite(bp, sizeof(double), (nextcf + 1), fbin);
   fwrite(su, sizeof(double), (nextcf + 1), fbin);
-    
-
+  
+  
   fclose(fbin);
   
   //=================================================================================
@@ -190,27 +190,27 @@ int main(int *argc, char *argv[])
   
   fclose(fbin);
   
-//   //TODO: Just printinf out the array -> to be deleted
-//   for (i = nintci; i <= nintcf; i++)
-//   {
-//     for (j = 0; j < 6; j++)
-//     {
-//       printf("%d\t", lcc[i][j]);
-//     }
-//     printf("\n");
-//   }
-//   
-//   for (i = nintci; i <= nintcf; i++)
-//   {
-//     printf("%lf\t", (bs[i]));
-//     printf("%lf\t", (be[i]));
-//     printf("%lf\t", (bn[i]));
-//     printf("%lf\t", (bw[i]));
-//     printf("%lf\t", (bl[i]));
-//     printf("%lf\t", (bh[i]));
-//     printf("%lf\t", (bp[i]));
-//     printf("%lf\n", (su[i]));
-//   }
+  //   //TODO: Just printinf out the array -> to be deleted
+  //   for (i = nintci; i <= nintcf; i++)
+  //   {
+  //     for (j = 0; j < 6; j++)
+  //     {
+  //       printf("%d\t", lcc[i][j]);
+  //     }
+  //     printf("\n");
+  //   }
+  //   
+  //   for (i = nintci; i <= nintcf; i++)
+  //   {
+  //     printf("%lf\t", (bs[i]));
+  //     printf("%lf\t", (be[i]));
+  //     printf("%lf\t", (bn[i]));
+  //     printf("%lf\t", (bw[i]));
+  //     printf("%lf\t", (bl[i]));
+  //     printf("%lf\t", (bh[i]));
+  //     printf("%lf\t", (bp[i]));
+  //     printf("%lf\n", (su[i]));
+  //   }
   
   
   
