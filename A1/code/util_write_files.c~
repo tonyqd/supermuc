@@ -85,9 +85,9 @@ int write_result(char *infilename, char *outfilename, int nintci, int nintcf,
     fprintf(fp, "     ===========\n\n");
     fprintf(fp, "     Output File:  %s\n", outfilename);
     fprintf(fp, "     ============\n\n");
-    fprintf(fp, "     %lld L2 cache misses, with L2 cash miss rate %.10lf \n\n", counters[0], (double)counters[0]/counters[1] );
+    fprintf(fp, "     %lld L2 cache misses, with L2 cash miss rate %le \n\n", counters[0], (double)counters[0]/counters[1] );
     fprintf(fp, "     ============\n\n");
-    fprintf(fp, "     %lld L3 cache misses, with L3 cash miss rate %.10lf \n\n", counters[2], (double)counters[2]/counters[3] );
+    fprintf(fp, "     %lld L3 cache misses, with L3 cash miss rate %le \n\n", counters[2], (double)counters[2]/counters[3] );
     fprintf(fp, "     ============\n\n"); 
     fprintf(fp, "     execution time: real time %f, total process time %f\n\n", rtime, ptime);
     fprintf(fp, "     ============\n\n");  
