@@ -15,7 +15,7 @@
 #include "compute_solution.h"
 #include "finalization.h"
 
-#define NUM_EVENTS 5
+#define NUM_EVENTS 4
 
 int main(int argc, char *argv[]) {
     int i;
@@ -76,13 +76,13 @@ int main(int argc, char *argv[]) {
         PAPI_L2_TCA, /*Level 2 total cache accesses*/
         PAPI_L3_TCM, /*Level 3 cache misses*/
         PAPI_L3_TCA, /*Level 3 total cache accesses*/
-        PAPI_TOT_CYC, /*Total cycles*/};
+        };
 
     if(PAPI_library_init(PAPI_VER_CURRENT) != PAPI_VER_CURRENT) exit(1);
-    
+
     /**********Start Counting*********/
     if(PAPI_start_counters(PAPI_events,NUM_EVENTS) != PAPI_OK) handle_error(1);
-        
+       
     /********** START COMPUTATIONAL LOOP **********/
     int total_iters = compute_solution(max_iters, nintci, nintcf, nextcf, lcc, bp, bs, bw, bl, bn,
                                        be, bh, cnorm, var, su, cgup, &residual_ratio);
