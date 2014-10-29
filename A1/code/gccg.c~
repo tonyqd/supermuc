@@ -45,11 +45,18 @@ int main(int argc, char *argv[]) {
 		printf("Error: input failed, please input as gccg <format> <input file> <output prefix>");	
 	return 0;
 	}
+	
 
 	 /*we should use format <format> <input file> <output prefix>*/
 	char *format = argv[1];    
 	char *file_in = argv[2];
 	char *prefix = argv[3];
+	
+	if ((*format != 'bin'))
+  {
+    printf("Error: wrong input file format specified! Use either 'text' or 'bin'!\n");
+    return -1;
+  }
  
     void handle_error (int retval)
     {
@@ -107,7 +114,6 @@ int main(int argc, char *argv[]) {
     
     
     if(PAPI_flops( &rtime, &ptime, &flpops,  &mflops ) != PAPI_OK) handle_error(1);
-    printf("third time:%f \n", rtime);
     
     /********** START COMPUTATIONAL LOOP **********/
     

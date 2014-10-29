@@ -51,12 +51,6 @@ int main(int argc, char *argv[]) {
 	char *format = argv[1];    
 	char *file_in = argv[2];
 	char *prefix = argv[3];
-	
-	if ((*format != 'bin'))
-  {
-    printf("Error: wrong input file format specified! Use either 'text' or 'bin'!\n");
-    return -1;
-  }
  
     void handle_error (int retval)
     {
