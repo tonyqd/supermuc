@@ -58,20 +58,19 @@ int main(int argc, char *argv[]) {
     }  
     /********** START INITIALIZATION **********/
     // read-in the input file
-    if(PAPI_library_init(PAPI_VER_CURRENT) != PAPI_VER_CURRENT) exit(1);
+   
     
     float rtime_read, ptime_read, mflops_read;
     long long flpops_read;    
     
-    if(PAPI_flops( &rtime_read, &ptime_read, &flpops_read,  &mflops_read ) != PAPI_OK) handle_error(1);
-    printf("first time:%f \n", rtime_read);
+    /*if(PAPI_flops( &rtime_read, &ptime_read, &flpops_read,  &mflops_read ) != PAPI_OK) handle_error(1);*/
+    
     
     int init_status = initialization(file_in, format, &nintci, &nintcf, &nextci, &nextcf, &lcc,
                                      &bs, &be, &bn, &bw, &bl, &bh, &bp, &su, &var, &cgup, &oc, 
                                      &cnorm, argv);
 
-    if(PAPI_flops( &rtime_read, &ptime_read, &flpops_read,  &mflops_read ) != PAPI_OK) handle_error(1);
-    printf("second time:%f \n", rtime_read);
+    /*if(PAPI_flops( &rtime_read, &ptime_read, &flpops_read,  &mflops_read ) != PAPI_OK) handle_error(1);*/
     
     if ( init_status != 0 ) {
         fprintf(stderr, "Failed to initialize data!\n");

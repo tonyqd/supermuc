@@ -30,8 +30,10 @@ gccg: gccg.c $(LIBPOS)
 $(LIBPOS) : $(OBJS)
 	$(AR) $(ARFLAGS) $@ $+
 
-clean:
-	rm -rf *.o gccg $(LIBPOS)
-	
 binconv:
 	$(CC) $(CFLAGS) binconv.c -o binconv
+
+clean:
+	rm -rf *.o gccg binconv $(LIBPOS)
+	
+

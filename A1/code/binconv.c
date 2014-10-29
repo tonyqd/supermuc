@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <malloc.h>
 
-int main(int *argc, char *argv[])
+int main(int argc, char *argv[])
 {
   
   int i, j;
@@ -24,7 +24,7 @@ int main(int *argc, char *argv[])
   if (argc !=3)
 	{
 		printf("Error: input failed, please input as ./binconv <input file> <output file>");	
-	return 0;
+	return -1;
 	}
 	
   filename_txt = argv[1];
