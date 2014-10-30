@@ -12,7 +12,7 @@
 int main(int argc, char *argv[])
 {
   
-  int i, j;
+  int i;
   char *filename_txt, *filename_bin;
   int nintci;
   int nintcf; 
@@ -22,18 +22,20 @@ int main(int argc, char *argv[])
   double *bs, *be, *bn, *bw, *bl, *bh, *bp, *su;
   
   if (argc !=3)
-	{
-		printf("Error: input failed, please input as ./binconv <input file> <output file>");	
-	return -1;
-	}
-	
+  {
+    printf("Error: input failed, please input as ./binconv <input file> <output file>");	
+    return -1;
+  }
+  
   filename_txt = argv[1];
   filename_bin = argv[2];
   
   printf("%s\n", filename_txt);
   
-  // Part of the code from util_read_files.c
+  // Part of the code from the util_read_files.c
+  
   //=================================================================================
+  
   FILE *fp = fopen(filename_txt, "r");
   if (fp == NULL)
   {
@@ -129,28 +131,35 @@ int main(int argc, char *argv[])
   }
   
   fclose(fp);
+  
   //=================================================================================
   
+  // New code
   // Writing to the binary file
   
+  // Opening the file for writing
   FILE *fbin = fopen(filename_bin, "wb");
   
+  // If the file cannot be loaded
   if (!fbin)
   {
     printf("Unable to open file!");
     return 1;
   }
   
+  // Writing the header variables
   fwrite(&nintci, sizeof(int), 1, fbin);
   fwrite(&nintcf, sizeof(int), 1, fbin);
   fwrite(&nextci, sizeof(int), 1, fbin);
   fwrite(&nextcf, sizeof(int), 1, fbin);
   
+  // Writing the lcc array. We save it in chunks of 6 elements - each chunk is a 1D array, to whom the array of pointers (lcc) is pointing.
   for (i = nintci; i <= nintcf; i++)
   {
     fwrite(lcc[i], sizeof(int), 6, fbin);
   }
   
+  // Saving 1D arrays using one fwrite function call for each array.
   fwrite(bs, sizeof(double), (nextcf + 1), fbin);
   fwrite(be, sizeof(double), (nextcf + 1), fbin);
   fwrite(bn, sizeof(double), (nextcf + 1), fbin);
@@ -165,63 +174,6 @@ int main(int argc, char *argv[])
   
   //=================================================================================
   
-  // Reading from binary file
-  
-  fbin = fopen(filename_bin, "rb");
-  
-  if (!fbin)
-  {
-    printf("Unable to open file!");
-    return 1;
-  }
-  
-  fread(&nintci, sizeof(int), 1, fbin);
-  fread(&nintcf, sizeof(int), 1, fbin);
-  fread(&nextci, sizeof(int), 1, fbin);
-  fread(&nextcf, sizeof(int), 1, fbin);
-  
-  for (i = nintci; i <= nintcf; i++)
-  {
-    fread(lcc[i], sizeof(int), 6, fbin);
-  }
-  
-  fread(bs, sizeof(double), (nextcf + 1), fbin);
-  fread(be, sizeof(double), (nextcf + 1), fbin);
-  fread(bn, sizeof(double), (nextcf + 1), fbin);
-  fread(bw, sizeof(double), (nextcf + 1), fbin);
-  fread(bl, sizeof(double), (nextcf + 1), fbin);
-  fread(bh, sizeof(double), (nextcf + 1), fbin);
-  fread(bp, sizeof(double), (nextcf + 1), fbin);
-  fread(su, sizeof(double), (nextcf + 1), fbin);
-  
-  fclose(fbin);
-  
-  //   //TODO: Just printinf out the array -> to be deleted
-  //   for (i = nintci; i <= nintcf; i++)
-  //   {
-  //     for (j = 0; j < 6; j++)
-  //     {
-  //       printf("%d\t", lcc[i][j]);
-  //     }
-  //     printf("\n");
-  //   }
-  //   
-  //   for (i = nintci; i <= nintcf; i++)
-  //   {
-  //     printf("%lf\t", (bs[i]));
-  //     printf("%lf\t", (be[i]));
-  //     printf("%lf\t", (bn[i]));
-  //     printf("%lf\t", (bw[i]));
-  //     printf("%lf\t", (bl[i]));
-  //     printf("%lf\t", (bh[i]));
-  //     printf("%lf\t", (bp[i]));
-  //     printf("%lf\n", (su[i]));
-  //   }
-  
-  
-  
-  
-  //=================================================================================
   // Freeing the memory
   free(su);
   free(bp);
@@ -232,10 +184,14 @@ int main(int argc, char *argv[])
   free(be);
   free(bs);
   
+  // Freeing the 2D lcc array
   for (i=0; i < (nintcf - nintci + 1); i++)
   {
     free(lcc[i]);
   }
   free(lcc);
   
+  return 0;
+  
 }
+
